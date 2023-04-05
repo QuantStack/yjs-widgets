@@ -1,14 +1,9 @@
-import { MapChange, YDocument } from '@jupyter/ydoc';
-import { IChangedArgs } from '@jupyterlab/coreutils';
-import { JSONExt, JSONObject, PartialJSONObject } from '@lumino/coreutils';
+import { MapChange } from '@jupyter/ydoc';
+import { JSONExt, JSONObject } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import * as Y from 'yjs';
 
-import {
-  IJupyterYDoc,
-  IJupyterYDocChange,
-  IJupyterYModel,
-} from './types';
+import { IJupyterYDoc, IJupyterYModel } from './types';
 
 interface IOptions {
   yModelName: string;
@@ -17,13 +12,9 @@ interface IOptions {
 
 export class JupyterYModel implements IJupyterYModel {
   constructor(options: IOptions) {
-    const { yModelName, sharedModel } = options;
+    const { yModelName } = options;
     this._yModelName = yModelName;
-    if (sharedModel) {
-      this._sharedModel = sharedModel;
-    } else {
-      this._sharedModel = JupyterYDoc.create();
-    }
+    this._sharedModel = new JupyterYDoc();
   }
 
   get yModelName(): string {
@@ -34,38 +25,16 @@ export class JupyterYModel implements IJupyterYModel {
     return this._sharedModel;
   }
 
-  get isDisposed(): boolean {
-    return this._isDisposed;
-  }
-
-  get contentChanged(): ISignal<this, void> {
-    return this._contentChanged;
-  }
-
-  get stateChanged(): ISignal<this, IChangedArgs<any, any, string>> {
-    return this._stateChanged;
-  }
-
-  get dirty(): boolean {
-    return this._dirty;
-  }
-  set dirty(value: boolean) {
-    this._dirty = value;
-  }
-
-  get readOnly(): boolean {
-    return this._readOnly;
-  }
-  set readOnly(value: boolean) {
-    this._readOnly = value;
-  }
-
   get sharedAttrsChanged(): ISignal<IJupyterYDoc, MapChange> {
     return this.sharedModel.attrsChanged;
   }
 
   get disposed(): ISignal<JupyterYModel, void> {
     return this._disposed;
+  }
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
   }
 
   dispose(): void {
@@ -78,25 +47,6 @@ export class JupyterYModel implements IJupyterYModel {
     Signal.clearData(this);
   }
 
-  fromString(data: string): void {
-  }
-
-  toJSON(): PartialJSONObject {
-    return JSON.parse(this.toString());
-  }
-
-  fromJSON(data: PartialJSONObject): void {
-    // nothing to do
-  }
-
-  initialize(): void {
-    //
-  }
-
-  getClientId(): number {
-    return this.sharedModel.awareness.clientID;
-  }
-
   addAttr(key: string, value: any): void {
     this.sharedModel.setAttr(key, value);
   }
@@ -105,43 +55,47 @@ export class JupyterYModel implements IJupyterYModel {
     this.sharedModel.removeAttr(key);
   }
 
-  readonly defaultKernelName: string = '';
-  readonly defaultKernelLanguage: string = '';
-
   private _yModelName: string;
   private _sharedModel: IJupyterYDoc;
 
-  private _dirty = false;
-  private _readOnly = false;
   private _isDisposed = false;
 
   private _disposed = new Signal<this, void>(this);
-  private _contentChanged = new Signal<this, void>(this);
-  private _stateChanged = new Signal<this, IChangedArgs<any>>(this);
 }
 
-export class JupyterYDoc
-  extends YDocument<IJupyterYDocChange>
-  implements IJupyterYDoc
-{
+export class JupyterYDoc implements IJupyterYDoc {
   constructor() {
-    super();
-
-    this._attrs = this.ydoc.getMap<string>('_attrs');
+    this._attrs = this._ydoc.getMap<string>('_attrs');
     this._attrs.observe(this._attrsObserver);
   }
 
-  dispose(): void {
-    this._attrs.unobserve(this._attrsObserver);
-    super.dispose();
+  get ydoc(): Y.Doc {
+    return this._ydoc;
   }
-
   get attrs(): JSONObject {
     return JSONExt.deepCopy(this._attrs.toJSON());
   }
 
   get attrsChanged(): ISignal<IJupyterYDoc, MapChange> {
     return this._attrsChanged;
+  }
+
+  get disposed(): ISignal<IJupyterYDoc, void> {
+    return this._disposed;
+  }
+
+  get isDisposed(): boolean {
+    return this._isDisposed;
+  }
+
+  dispose(): void {
+    if (this._isDisposed) {
+      return;
+    }
+    this._attrs.unobserve(this._attrsObserver);
+    this._disposed.emit();
+    Signal.clearData(this);
+    this._isDisposed = true;
   }
 
   getAttr(key: string): string | undefined {
@@ -158,14 +112,15 @@ export class JupyterYDoc
     }
   }
 
-  static create(): IJupyterYDoc {
-    return new JupyterYDoc();
-  }
-
   private _attrsObserver = (event: Y.YMapEvent<string>): void => {
     this._attrsChanged.emit(event.keys);
   };
 
   private _attrs: Y.Map<string>;
   private _attrsChanged = new Signal<IJupyterYDoc, MapChange>(this);
+
+  private _isDisposed = false;
+
+  private _disposed = new Signal<this, void>(this);
+  private _ydoc = new Y.Doc();
 }

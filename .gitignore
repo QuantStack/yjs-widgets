@@ -122,3 +122,5 @@ ui-tests/playwright-report/
 examples/*.ipynb
 # Hatchling 
 yjs_widgets/_version.py
+
+.yarn/

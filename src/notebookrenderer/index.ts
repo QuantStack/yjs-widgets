@@ -1,6 +1,6 @@
 import {
-    JupyterFrontEnd,
-    JupyterFrontEndPlugin
+  JupyterFrontEnd,
+  JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { ISessionContext } from '@jupyterlab/apputils';
 import { IChangedArgs } from '@jupyterlab/coreutils';
@@ -44,41 +44,40 @@ export const notebookRenderer: JupyterFrontEndPlugin<void> = {
   }
 };
 
-export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> =
-  {
-    id: 'jupyterywidget:serverInfoPlugin',
-    autoStart: true,
-    requires: [INotebookTracker],
-    provides: IJupyterYWidgetManager,
-    activate: (
-      app: JupyterFrontEnd,
-      tracker: INotebookTracker
-    ): IJupyterYWidgetManager => {
-      const registry = new JupyterYWidgetManager();
-      const onKernelChanged = (
-        _: ISessionContext,
-        changedArgs: IChangedArgs<
-          Kernel.IKernelConnection | null,
-          Kernel.IKernelConnection | null,
-          'kernel'
-        >
-      ) => {
-        const { newValue, oldValue } = changedArgs;
-        if (newValue) {
-          registry.unregisterKernel(oldValue?.id);
-          registry.registerKernel(newValue);
-          newValue.disposed.connect(() => {
-            registry.unregisterKernel(newValue.id);
-          });
-        }
-      };
-      tracker.widgetAdded.connect(async (_, notebook) => {
-        notebook.sessionContext.kernelChanged.connect(onKernelChanged);
-        notebook.disposed.connect(() => {
-          notebook.sessionContext.kernelChanged.disconnect(onKernelChanged);
+export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> = {
+  id: 'jupyterywidget:serverInfoPlugin',
+  autoStart: true,
+  requires: [INotebookTracker],
+  provides: IJupyterYWidgetManager,
+  activate: (
+    app: JupyterFrontEnd,
+    tracker: INotebookTracker
+  ): IJupyterYWidgetManager => {
+    const registry = new JupyterYWidgetManager();
+    const onKernelChanged = (
+      _: ISessionContext,
+      changedArgs: IChangedArgs<
+        Kernel.IKernelConnection | null,
+        Kernel.IKernelConnection | null,
+        'kernel'
+      >
+    ) => {
+      const { newValue, oldValue } = changedArgs;
+      if (newValue) {
+        registry.unregisterKernel(oldValue?.id);
+        registry.registerKernel(newValue);
+        newValue.disposed.connect(() => {
+          registry.unregisterKernel(newValue.id);
         });
+      }
+    };
+    tracker.widgetAdded.connect(async (_, notebook) => {
+      notebook.sessionContext.kernelChanged.connect(onKernelChanged);
+      notebook.disposed.connect(() => {
+        notebook.sessionContext.kernelChanged.disconnect(onKernelChanged);
       });
+    });
 
-      return registry;
-    }
-  };
+    return registry;
+  }
+};

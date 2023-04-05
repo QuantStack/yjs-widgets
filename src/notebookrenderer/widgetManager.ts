@@ -21,15 +21,16 @@ export class JupyterYWidgetManager implements IJupyterYWidgetManager {
     }
   }
 
-  registerWidget(name: string, yModelFactory: IJupyterYModelFactory, yWidgetFactory: IJupyterYWidgetFactory): void {
-    this._yModelFactories.set(name, yModelFactory)
-    this._yWidgetFactories.set(name, yWidgetFactory)
+  registerWidget(
+    name: string,
+    yModelFactory: IJupyterYModelFactory,
+    yWidgetFactory: IJupyterYWidgetFactory
+  ): void {
+    this._yModelFactories.set(name, yModelFactory);
+    this._yWidgetFactories.set(name, yWidgetFactory);
   }
 
-  getWidgetModel(
-    kernelId: string,
-    commId: string
-  ): IJupyterYModel | undefined {
+  getWidgetModel(kernelId: string, commId: string): IJupyterYModel | undefined {
     return this._registry.get(kernelId)?.getModel(commId);
   }
 
@@ -65,7 +66,9 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
   ): Promise<void> => {
     const yModelName = msg.metadata.ymodel_name as string;
     const yModelFactory = this._yModelFactories.get(yModelName);
-    const yModel: IJupyterYModel = new yModelFactory({yModelName: yModelName});
+    const yModel: IJupyterYModel = new yModelFactory({
+      yModelName: yModelName
+    });
 
     new YCommProvider({
       comm,

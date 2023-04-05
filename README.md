@@ -27,15 +27,17 @@ class MyWidget1 {
   constructor(yModel: IJupyterYModel, node: HTMLElement) {
     this.yModel = yModel;
     this.node = node;
-    yModel.sharedModel.attrsChanged.connect(() => {this._update();});
-    node.textContent = "hello from my widget";
+    yModel.sharedModel.attrsChanged.connect(() => {
+      this._update();
+    });
+    node.textContent = 'hello from my widget';
   }
 
   _update(): void {
     const foo1: string = this.yModel.sharedModel.getAttr('foo1') as string;
     const bar1: string = this.yModel.sharedModel.getAttr('bar1') as string;
-    if (bar1 != "abc") {
-        this.yModel.sharedModel.setAttr('bar1', "abc");
+    if (bar1 != 'abc') {
+      this.yModel.sharedModel.setAttr('bar1', 'abc');
     }
     this.node.textContent = foo1;
   }
@@ -44,18 +46,14 @@ class MyWidget1 {
   node: HTMLElement;
 }
 
-export const foo: JupyterFrontEndPlugin<void> =
-  {
-    id: 'foo:bar',
-    autoStart: true,
-    requires: [IJupyterYWidgetManager],
-    activate: (
-      app: JupyterFrontEnd,
-      wm: IJupyterYWidgetManager 
-    ): void => {
-        wm.registerWidget('MyWidget1', JupyterYModel, MyWidget1);
-    }
-  };
+export const foo: JupyterFrontEndPlugin<void> = {
+  id: 'foo:bar',
+  autoStart: true,
+  requires: [IJupyterYWidgetManager],
+  activate: (app: JupyterFrontEnd, wm: IJupyterYWidgetManager): void => {
+    wm.registerWidget('MyWidget1', JupyterYModel, MyWidget1);
+  }
+};
 ```
 
 ## Contributing
