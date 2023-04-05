@@ -1,8 +1,9 @@
-import { MapChange, StateChange } from '@jupyter/ydoc';
-import * as Y from 'yjs';
-import { ISignal } from '@lumino/signaling';
-import { JSONObject } from '@lumino/coreutils';
+import { MapChange, StateChange } from "@jupyter/ydoc";
+import * as Y from "yjs";
+import { ISignal } from "@lumino/signaling";
+import { JSONObject } from "@lumino/coreutils";
 import { IDisposable } from '@lumino/disposable';
+
 
 export interface IJupyterYDocChange {
   attrsChange?: MapChange;
