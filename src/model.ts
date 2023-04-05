@@ -1,9 +1,9 @@
-import { MapChange } from "@jupyter/ydoc";
-import { JSONExt, JSONObject } from "@lumino/coreutils";
-import { ISignal, Signal } from "@lumino/signaling";
-import * as Y from "yjs";
+import { MapChange } from '@jupyter/ydoc';
+import { JSONExt, JSONObject } from '@lumino/coreutils';
+import { ISignal, Signal } from '@lumino/signaling';
+import * as Y from 'yjs';
 
-import { IJupyterYDoc, IJupyterYModel } from "./types";
+import { IJupyterYDoc, IJupyterYModel } from './types';
 
 interface IOptions {
   yModelName: string;
@@ -65,7 +65,7 @@ export class JupyterYModel implements IJupyterYModel {
 
 export class JupyterYDoc implements IJupyterYDoc {
   constructor() {
-    this._attrs = this._ydoc.getMap<string>("_attrs");
+    this._attrs = this._ydoc.getMap<string>('_attrs');
     this._attrs.observe(this._attrsObserver);
   }
 

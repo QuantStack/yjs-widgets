@@ -30,7 +30,9 @@ export class NotebookRendererModel implements IDisposable {
     if (this._kernelId) {
       const yModel = this._widgetManager.getWidgetModel(this._kernelId, commId);
       if (yModel) {
-        const widgetFactory = this._widgetManager.getWidgetFactory(yModel.yModelName);
+        const widgetFactory = this._widgetManager.getWidgetFactory(
+          yModel.yModelName
+        );
         new widgetFactory(yModel, node);
       }
     }

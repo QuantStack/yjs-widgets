@@ -21,13 +21,8 @@ export interface IJupyterYWidgetManager {
     yModelFactory: IJupyterYModelFactory,
     yWidgetFactory: IJupyterYWidgetFactory
   ): void;
-  getWidgetModel(
-    kernelId: string,
-    commId: string
-  ): IJupyterYModel | undefined;
-  getWidgetFactory(
-    modelName: string
-  ): any | undefined;
+  getWidgetModel(kernelId: string, commId: string): IJupyterYModel | undefined;
+  getWidgetFactory(modelName: string): any | undefined;
 }
 
 export const IJupyterYWidgetManager = new Token<IJupyterYWidgetManager>(

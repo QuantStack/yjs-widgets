@@ -11,7 +11,10 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
   /**
    * Construct a new output widget.
    */
-  constructor(options: { modelFactory: NotebookRendererModel; mimeType: string }) {
+  constructor(options: {
+    modelFactory: NotebookRendererModel;
+    mimeType: string;
+  }) {
     super();
     this._modelFactory = options.modelFactory;
     this._mimeType = options.mimeType;

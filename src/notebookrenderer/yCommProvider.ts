@@ -44,7 +44,9 @@ export class YCommProvider implements IDisposable {
   private _onMsg = (msg: KernelMessage.ICommMsgMsg<'iopub' | 'shell'>) => {
     if (msg.buffers) {
       const buffer = msg.buffers[0] as ArrayBuffer;
-      const buffer_uint8 = new Uint8Array(ArrayBuffer.isView(buffer) ? buffer.buffer : buffer);
+      const buffer_uint8 = new Uint8Array(
+        ArrayBuffer.isView(buffer) ? buffer.buffer : buffer
+      );
       const encoder = Private.readMessage(this, buffer_uint8, true);
       if (encoding.length(encoder) > 1) {
         this._sendOverComm(encoding.toUint8Array(encoder));
