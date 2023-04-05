@@ -1,12 +1,12 @@
-import { Kernel, KernelMessage } from '@jupyterlab/services';
+import { Kernel, KernelMessage } from "@jupyterlab/services";
 import {
   IJupyterYWidgetModelRegistry,
   IJupyterYWidgetManager,
   IJupyterYModelFactory,
-  IJupyterYWidgetFactory
-} from './types';
-import { YCommProvider } from './yCommProvider';
-import { IJupyterYModel } from '../types';
+  IJupyterYWidgetFactory,
+} from "./types";
+import { YCommProvider } from "./yCommProvider";
+import { IJupyterYModel } from "../types";
 
 export class JupyterYWidgetManager implements IJupyterYWidgetManager {
   registerKernel(kernel: Kernel.IKernelConnection): void {
@@ -21,15 +21,16 @@ export class JupyterYWidgetManager implements IJupyterYWidgetManager {
     }
   }
 
-  registerWidget(name: string, yModelFactory: IJupyterYModelFactory, yWidgetFactory: IJupyterYWidgetFactory): void {
-    this._yModelFactories.set(name, yModelFactory)
-    this._yWidgetFactories.set(name, yWidgetFactory)
+  registerWidget(
+    name: string,
+    yModelFactory: IJupyterYModelFactory,
+    yWidgetFactory: IJupyterYWidgetFactory
+  ): void {
+    this._yModelFactories.set(name, yModelFactory);
+    this._yWidgetFactories.set(name, yWidgetFactory);
   }
 
-  getWidgetModel(
-    kernelId: string,
-    commId: string
-  ): IJupyterYModel | undefined {
+  getWidgetModel(kernelId: string, commId: string): IJupyterYModel | undefined {
     return this._registry.get(kernelId)?.getModel(commId);
   }
 
@@ -49,7 +50,7 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
   }) {
     const { kernel, yModelFactories } = options;
     this._yModelFactories = yModelFactories;
-    kernel.registerCommTarget('ywidget', this._handle_comm_open);
+    kernel.registerCommTarget("ywidget", this._handle_comm_open);
   }
 
   getModel(id: string): IJupyterYModel | undefined {
@@ -65,11 +66,13 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
   ): Promise<void> => {
     const yModelName = msg.metadata.ymodel_name as string;
     const yModelFactory = this._yModelFactories.get(yModelName);
-    const yModel: IJupyterYModel = new yModelFactory({yModelName: yModelName});
+    const yModel: IJupyterYModel = new yModelFactory({
+      yModelName: yModelName,
+    });
 
     new YCommProvider({
       comm,
-      ydoc: yModel.sharedModel.ydoc
+      ydoc: yModel.sharedModel.ydoc,
     });
     this._yModels.set(comm.commId, yModel);
   };

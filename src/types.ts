@@ -1,22 +1,16 @@
-import { DocumentRegistry } from '@jupyterlab/docregistry';
+import { MapChange, StateChange } from "@jupyter/ydoc";
+import * as Y from "yjs";
+import { ISignal } from "@lumino/signaling";
+import { JSONObject } from "@lumino/coreutils";
+import { IDisposable } from '@lumino/disposable';
 
-import { MapChange, YDocument, StateChange } from '@jupyter/ydoc';
-
-import { ISignal } from '@lumino/signaling';
-import { JSONObject } from '@lumino/coreutils';
-
-export interface IDict<T = any> {
-  [key: string]: T;
-}
-
-export type ValueOf<T> = T[keyof T];
 
 export interface IJupyterYDocChange {
-    attrsChange?: MapChange;
-    stateChange?: StateChange<any>[];
+  attrsChange?: MapChange;
+  stateChange?: StateChange<any>[];
 }
 
-export interface IJupyterYDoc extends YDocument<IJupyterYDocChange> {
+export interface IJupyterYDoc extends IDisposable {
   attrs: JSONObject;
 
   getAttr(key: string): string | undefined;
@@ -24,18 +18,16 @@ export interface IJupyterYDoc extends YDocument<IJupyterYDocChange> {
   removeAttr(key: string): void;
 
   attrsChanged: ISignal<IJupyterYDoc, MapChange>;
-
+  ydoc: Y.Doc;
   disposed: ISignal<any, void>;
 }
 
-export interface IJupyterYModel extends DocumentRegistry.IModel {
+export interface IJupyterYModel extends IDisposable {
   yModelName: string;
   isDisposed: boolean;
   sharedModel: IJupyterYDoc;
 
   sharedAttrsChanged: ISignal<IJupyterYDoc, MapChange>;
-
-  getClientId(): number;
 
   disposed: ISignal<any, void>;
 }
