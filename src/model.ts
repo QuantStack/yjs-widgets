@@ -65,7 +65,7 @@ export class JupyterYModel implements IJupyterYModel {
 
 export class JupyterYDoc implements IJupyterYDoc {
   constructor() {
-    this._attrs = this._ydoc.getMap<string>("_attrs");
+    this._attrs = this._ydoc.getMap<string>('_attrs');
     this._attrs.observe(this._attrsObserver);
   }
 

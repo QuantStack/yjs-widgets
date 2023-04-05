@@ -1,12 +1,12 @@
-import { Kernel, KernelMessage } from "@jupyterlab/services";
+import { Kernel, KernelMessage } from '@jupyterlab/services';
 import {
   IJupyterYWidgetModelRegistry,
   IJupyterYWidgetManager,
   IJupyterYModelFactory,
-  IJupyterYWidgetFactory,
-} from "./types";
-import { YCommProvider } from "./yCommProvider";
-import { IJupyterYModel } from "../types";
+  IJupyterYWidgetFactory
+} from './types';
+import { YCommProvider } from './yCommProvider';
+import { IJupyterYModel } from '../types';
 
 export class JupyterYWidgetManager implements IJupyterYWidgetManager {
   registerKernel(kernel: Kernel.IKernelConnection): void {
@@ -50,7 +50,7 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
   }) {
     const { kernel, yModelFactories } = options;
     this._yModelFactories = yModelFactories;
-    kernel.registerCommTarget("ywidget", this._handle_comm_open);
+    kernel.registerCommTarget('ywidget', this._handle_comm_open);
   }
 
   getModel(id: string): IJupyterYModel | undefined {
@@ -67,12 +67,12 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
     const yModelName = msg.metadata.ymodel_name as string;
     const yModelFactory = this._yModelFactories.get(yModelName);
     const yModel: IJupyterYModel = new yModelFactory({
-      yModelName: yModelName,
+      yModelName: yModelName
     });
 
     new YCommProvider({
       comm,
-      ydoc: yModel.sharedModel.ydoc,
+      ydoc: yModel.sharedModel.ydoc
     });
     this._yModels.set(comm.commId, yModel);
   };
