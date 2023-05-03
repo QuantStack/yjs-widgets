@@ -26,7 +26,8 @@ export interface IJupyterYWidgetManager {
 }
 
 export const IJupyterYWidgetManager = new Token<IJupyterYWidgetManager>(
-  'jupyterYWidgetManager'
+  'yjs-widgets:IJupyterYWidgetManager',
+  'A manager of Yjs-based Jupyter widgets.'
 );
 
 export interface IJupyterYWidget {
