@@ -64,11 +64,8 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
     comm: Kernel.IComm,
     msg: KernelMessage.ICommOpenMsg
   ): Promise<void> => {
-    const yModelName = msg.metadata.ymodel_name as string;
-    const yModelFactory = this._yModelFactories.get(yModelName);
-    const yModel: IJupyterYModel = new yModelFactory({
-      yModelName: yModelName
-    });
+    const yModelFactory = this._yModelFactories.get(msg.metadata.ymodel_name as string);
+    const yModel: IJupyterYModel = new yModelFactory(msg.metadata);
 
     new YCommProvider({
       comm,

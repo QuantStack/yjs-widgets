@@ -18,6 +18,7 @@ export interface IJupyterYDoc extends IDisposable {
 
   attrsChanged: ISignal<IJupyterYDoc, MapChange>;
   ydoc: Y.Doc;
+  commMetadata: {[key: string]: any};
   disposed: ISignal<any, void>;
 }
 

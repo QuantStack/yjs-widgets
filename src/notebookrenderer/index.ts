@@ -45,7 +45,7 @@ export const notebookRenderer: JupyterFrontEndPlugin<void> = {
 };
 
 export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> = {
-  id: 'jupyterywidget:serverInfoPlugin',
+  id: 'yjs-widgets:yWidgetManagerPlugin',
   autoStart: true,
   requires: [INotebookTracker],
   provides: IJupyterYWidgetManager,

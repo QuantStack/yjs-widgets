@@ -5,16 +5,11 @@ import * as Y from 'yjs';
 
 import { IJupyterYDoc, IJupyterYModel } from './types';
 
-interface IOptions {
-  yModelName: string;
-  sharedModel?: IJupyterYDoc;
-}
-
 export class JupyterYModel implements IJupyterYModel {
-  constructor(options: IOptions) {
-    const { yModelName } = options;
-    this._yModelName = yModelName;
-    this._sharedModel = new JupyterYDoc();
+  constructor(commMetadata: {[key: string]: any}) {
+    this._yModelName = commMetadata.ymodel_name;
+    const ydoc = this.ydocFactory(commMetadata);
+    this._sharedModel = new JupyterYDoc(commMetadata, ydoc);
   }
 
   get yModelName(): string {
@@ -35,6 +30,10 @@ export class JupyterYModel implements IJupyterYModel {
 
   get isDisposed(): boolean {
     return this._isDisposed;
+  }
+
+  ydocFactory(commMetadata: {[key: string]: any}): Y.Doc {
+    return new Y.Doc();
   }
 
   dispose(): void {
@@ -64,13 +63,24 @@ export class JupyterYModel implements IJupyterYModel {
 }
 
 export class JupyterYDoc implements IJupyterYDoc {
-  constructor() {
-    this._attrs = this._ydoc.getMap<string>('_attrs');
-    this._attrs.observe(this._attrsObserver);
+  constructor(commMetadata: {[key: string]: any}, ydoc: Y.Doc) {
+    this._commMetadata = commMetadata;
+    this._ydoc = ydoc;
+    if (commMetadata.create_ydoc) {
+      this._attrs = this._ydoc.getMap<string>('_attrs');
+      this._attrs.observe(this._attrsObserver);
+    }
+  }
+
+  get commMetadata(): {[key: string]: any} {
+    return this._commMetadata;
   }
 
   get ydoc(): Y.Doc {
     return this._ydoc;
+  }
+  set ydoc(value: Y.Doc) {
+    this._ydoc = value;
   }
   get attrs(): JSONObject {
     return JSONExt.deepCopy(this._attrs.toJSON());
@@ -122,5 +132,6 @@ export class JupyterYDoc implements IJupyterYDoc {
   private _isDisposed = false;
 
   private _disposed = new Signal<this, void>(this);
-  private _ydoc = new Y.Doc();
+  private _ydoc: Y.Doc;
+  private _commMetadata: {[key: string]: any};
 }
