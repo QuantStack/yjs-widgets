@@ -79,9 +79,6 @@ export class JupyterYDoc implements IJupyterYDoc {
   get ydoc(): Y.Doc {
     return this._ydoc;
   }
-  set ydoc(value: Y.Doc) {
-    this._ydoc = value;
-  }
   get attrs(): JSONObject {
     return JSONExt.deepCopy(this._attrs.toJSON());
   }
