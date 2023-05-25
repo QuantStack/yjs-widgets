@@ -23,23 +23,20 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 
-class MyWidget1 {
+class MyWidget {
   constructor(yModel: IJupyterYModel, node: HTMLElement) {
     this.yModel = yModel;
     this.node = node;
     yModel.sharedModel.attrsChanged.connect(() => {
-      this._update();
+      this._attrsChanged();
     });
-    node.textContent = 'hello from my widget';
+    node.textContent = 'Hello world!';
   }
 
-  _update(): void {
-    const foo1: string = this.yModel.sharedModel.getAttr('foo1') as string;
-    const bar1: string = this.yModel.sharedModel.getAttr('bar1') as string;
-    if (bar1 != 'abc') {
-      this.yModel.sharedModel.setAttr('bar1', 'abc');
-    }
-    this.node.textContent = foo1;
+  _attrsChanged(): void {
+    const foo: string = this.yModel.sharedModel.getAttr('foo') as string;
+    const bar: string = this.yModel.sharedModel.getAttr('bar') as string;
+    this.node.textContent = `foo=${foo}, bar=${bar}`;
   }
 
   yModel: IJupyterYModel;
@@ -51,7 +48,7 @@ export const foo: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [IJupyterYWidgetManager],
   activate: (app: JupyterFrontEnd, wm: IJupyterYWidgetManager): void => {
-    wm.registerWidget('MyWidget1', JupyterYModel, MyWidget1);
+    wm.registerWidget('MyWidget', JupyterYModel, MyWidget);
   }
 };
 ```

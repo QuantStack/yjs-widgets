@@ -1,9 +1,9 @@
 [build-system]
 build-backend = "hatchling.build"
 requires = [
-    "hatchling>=1.5.0",
+    "hatchling",
     "hatch-nodejs-version",
-    "jupyterlab>=4.0.0b2,<5",
+    "jupyterlab>=4.0.0,<5",
 ]
 
 
@@ -13,9 +13,7 @@ readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.7"
 dependencies = [
-    "jupyterlab>=4.0.0b2",
-    "jupyter_collaboration >=1.0.0a7",
-    "jupyter_server>=2.0.6",
+    "jupyterlab>=4.0.0",
     "ypywidgets>=0.4.0,<1",
     "comm>=0.1.3,<0.2.0"
 ]
@@ -23,10 +21,11 @@ classifiers = [
     "License :: OSI Approved :: BSD License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.6",
     "Programming Language :: Python :: 3.7",
     "Programming Language :: Python :: 3.8",
     "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
     "Framework :: Jupyter",
     "Framework :: Jupyter :: JupyterLab",
     "Framework :: Jupyter :: JupyterLab :: 3",
