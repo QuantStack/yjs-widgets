@@ -4860,7 +4860,7 @@ __metadata:
     typescript: ~5.0.4
     webpack: ^5.77.0
     webpack-cli: ^5.0.1
-    yjs-widgets: ^0.3.0
+    yjs-widgets: ^0.3.3
   languageName: unknown
   linkType: soft
 
@@ -5750,9 +5750,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yjs-widgets@npm:^0.3.0":
-  version: 0.3.1
-  resolution: "yjs-widgets@npm:0.3.1"
+"yjs-widgets@npm:^0.3.3":
+  version: 0.3.3
+  resolution: "yjs-widgets@npm:0.3.3"
   dependencies:
     "@jupyter-widgets/base": ^6.0.2
     "@jupyter/ydoc": ^1.0.2
@@ -5769,7 +5769,7 @@ __metadata:
     uuid: ^9.0.0
     webpack: ^5.77.0
     webpack-cli: ^5.0.1
-  checksum: cfbf1f1e5e62ba96e38f5fddf3f28963faed6af7aa40519b549626c038cc61978140501f86eef81db1c1cd43b2fb741950d1cb4c6b121f944f48d4cf2d0a6cc0
+  checksum: 44aad745b35d75e4fd903c841f0e6bfb31578961b3ffea6b8016807e8785c584e7f6ec12672cda25640a3975b0b7ba79639fbdfb9758b1bc2cc34749a6f74f03
   languageName: node
   linkType: hard
 

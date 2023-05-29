@@ -51,7 +51,7 @@
   "dependencies": {
     "webpack": "^5.77.0",
     "webpack-cli": "^5.0.1",
-    "yjs-widgets": "^0.3.0"
+    "yjs-widgets": "^0.3.3"
   },
   "devDependencies": {
     "@jupyterlab/builder": "~4.0.0",
