@@ -1,0 +1,85 @@
+[build-system]
+build-backend = "hatchling.build"
+requires = [
+    "hatchling>=1.5.0",
+    "hatch-nodejs-version",
+    "jupyterlab>=4.0.0,<5",
+]
+
+
+[project]
+name = "simple_yjs_widget"
+readme = "README.md"
+license = { file = "LICENSE" }
+requires-python = ">=3.7"
+dependencies = [
+    "jupyterlab>=4.0.0",
+    "ypywidgets>=0.4.0,<1",
+    "yjs-widgets>=0.3.3",
+    "comm>=0.1.3,<0.2.0"
+]
+classifiers = [
+    "License :: OSI Approved :: BSD License",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Framework :: Jupyter",
+    "Framework :: Jupyter :: JupyterLab",
+    "Framework :: Jupyter :: JupyterLab :: 3",
+    "Framework :: Jupyter :: JupyterLab :: Extensions",
+    "Framework :: Jupyter :: JupyterLab :: Extensions :: Prebuilt",
+]
+dynamic = ["version", "description", "authors", "urls", "keywords"]
+
+[tool.hatch.version]
+source = "nodejs"
+
+[tool.hatch.metadata.hooks.nodejs]
+fields = ["description", "authors", "urls"]
+
+[tool.hatch.build.target.sdist]
+artifacts = ["simple_yjs_widget/labextension"]
+exclude = [".github", "binder"]
+
+[tool.hatch.build.targets.wheel.shared-data]
+"install.json" = "share/jupyter/labextensions/simple-yjs-widget/install.json"
+"simple_yjs_widget/labextension" = "share/jupyter/labextensions/simple-yjs-widget"
+
+[tool.hatch.build.hooks.version]
+path = "simple_yjs_widget/_version.py"
+
+[tool.hatch.build.hooks.jupyter-builder]
+dependencies = ["hatch-jupyter-builder>=0.5"]
+build-function = "hatch_jupyter_builder.npm_builder"
+ensured-targets = [
+    "simple_yjs_widget/labextension/static/style.js",
+    "simple_yjs_widget/labextension/package.json",
+]
+skip-if-exists = ["simple_yjs_widget/labextension/static/style.js"]
+
+[tool.hatch.build.hooks.jupyter-builder.build-kwargs]
+build_cmd = "build:prod"
+npm = ["jlpm"]
+
+[tool.hatch.build.hooks.jupyter-builder.editable-build-kwargs]
+build_cmd = "install:extension"
+npm = ["jlpm"]
+source_dir = "src"
+build_dir = "simple_yjs_widget/labextension"
+
+[tool.jupyter-releaser.options]
+version-cmd = "hatch version"
+
+[tool.jupyter-releaser.hooks]
+before-build-npm = [
+    "jlpm",
+    "jlpm build:prod",
+]
+before-build-python = ["jlpm clean:all"]
+
+[tool.check-wheel-contents]
+ignore = ["W002"]
