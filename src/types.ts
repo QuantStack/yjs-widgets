@@ -12,8 +12,8 @@ export interface IJupyterYDocChange {
 export interface IJupyterYDoc extends IDisposable {
   attrs: JSONObject;
 
-  getAttr(key: string): string | undefined;
-  setAttr(key: string, value: string): void;
+  getAttr(key: string): any;
+  setAttr(key: string, value: any): void;
   removeAttr(key: string): void;
 
   attrsChanged: ISignal<IJupyterYDoc, MapChange>;

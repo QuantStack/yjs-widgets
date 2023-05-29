@@ -105,7 +105,7 @@ export class JupyterYDoc implements IJupyterYDoc {
     this._isDisposed = true;
   }
 
-  getAttr(key: string): string | undefined {
+  getAttr(key: string): any {
     return this._attrs.get(key);
   }
 
