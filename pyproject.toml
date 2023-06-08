@@ -8,7 +8,7 @@ requires = [
 
 
 [project]
-name = "yjs_widgets"
+name = "yjs-widgets"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.7"
