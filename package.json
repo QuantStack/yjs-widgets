@@ -50,10 +50,10 @@
   },
   "dependencies": {
     "@jupyter-widgets/base": "^6.0.2",
-    "@jupyter/ydoc": "^1.0.2",
+    "@jupyter/collaboration": "^2.0.0",
+    "@jupyter/ydoc": "^2.0.0",
     "@jupyterlab/application": "^4.0.0",
     "@jupyterlab/apputils": "^4.0.0",
-    "@jupyterlab/collaboration": "^4.0.0-alpha.18",
     "@jupyterlab/coreutils": "^6.0.0",
     "@jupyterlab/notebook": "^4.0.0",
     "@jupyterlab/services": "^7.0.0",
@@ -71,7 +71,7 @@
     "@jupyterlab/notebook": "~4.0.0"
   },
   "devDependencies": {
-    "@jupyterlab/builder": "~4.0.0",
+    "@jupyterlab/builder": "^4.2.1",
     "@types/node": "^16.11.10",
     "@typescript-eslint/eslint-plugin": "^4.8.1",
     "@typescript-eslint/parser": "^4.8.1",
