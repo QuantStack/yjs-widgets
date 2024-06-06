@@ -4,6 +4,7 @@ import { IJupyterYModel } from '../types';
 
 export interface IJupyterYWidgetModelRegistry {
   getModel(id: string): IJupyterYModel | undefined;
+  setModel(id: string, model: IJupyterYModel): void;
 }
 
 export interface IJupyterYModelFactory {
@@ -15,6 +16,7 @@ export interface IJupyterYWidgetFactory {
 }
 
 export interface IJupyterYWidgetManager {
+  registerNotebook(notebookId: string): IJupyterYWidgetModelRegistry;
   registerKernel(kernel: Kernel.IKernelConnection): void;
   registerWidget(
     name: string,
@@ -23,6 +25,7 @@ export interface IJupyterYWidgetManager {
   ): void;
   getWidgetModel(kernelId: string, commId: string): IJupyterYModel | undefined;
   getWidgetFactory(modelName: string): any | undefined;
+  yModelFactories: Map<string, IJupyterYModelFactory>;
 }
 
 export const IJupyterYWidgetManager = new Token<IJupyterYWidgetManager>(

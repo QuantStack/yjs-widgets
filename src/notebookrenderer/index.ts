@@ -34,7 +34,7 @@ export const notebookRenderer: JupyterFrontEndPlugin<void> = {
           nbTracker.currentWidget?.sessionContext.session?.kernel?.id;
         const mimeType = options.mimeType;
         const modelFactory = new NotebookRendererModel({
-          kernelId,
+          kernelOrNotebookId: kernelId,
           widgetManager: wmManager
         });
         return new JupyterYWidget({ mimeType, modelFactory });

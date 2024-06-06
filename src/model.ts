@@ -6,10 +6,11 @@ import * as Y from 'yjs';
 import { IJupyterYDoc, IJupyterYModel } from './types';
 
 export class JupyterYModel implements IJupyterYModel {
-  constructor(commMetadata: {[key: string]: any}) {
-    this._yModelName = commMetadata.ymodel_name;
-    const ydoc = this.ydocFactory(commMetadata);
-    this._sharedModel = new JupyterYDoc(commMetadata, ydoc);
+  constructor(options: {[key: string]: any}) {
+    this._yModelName = options.ymodel_name;
+    const ydoc = this.ydocFactory(options);
+    this._sharedModel = new JupyterYDoc(options, ydoc);
+    this.roomId = options.room_id;
   }
 
   get yModelName(): string {
@@ -32,7 +33,7 @@ export class JupyterYModel implements IJupyterYModel {
     return this._isDisposed;
   }
 
-  ydocFactory(commMetadata: {[key: string]: any}): Y.Doc {
+  ydocFactory(options: {[key: string]: any}): Y.Doc {
     return new Y.Doc();
   }
 
@@ -56,24 +57,24 @@ export class JupyterYModel implements IJupyterYModel {
 
   private _yModelName: string;
   private _sharedModel: IJupyterYDoc;
-
   private _isDisposed = false;
-
   private _disposed = new Signal<this, void>(this);
+
+  roomId?: string;
 }
 
 export class JupyterYDoc implements IJupyterYDoc {
-  constructor(commMetadata: {[key: string]: any}, ydoc: Y.Doc) {
-    this._commMetadata = commMetadata;
+  constructor(options: {[key: string]: any}, ydoc: Y.Doc) {
+    this._options = options;
     this._ydoc = ydoc;
-    if (commMetadata.create_ydoc) {
+    if (options.create_ydoc) {
       this._attrs = this._ydoc.getMap<string>('_attrs');
       this._attrs.observe(this._attrsObserver);
     }
   }
 
-  get commMetadata(): {[key: string]: any} {
-    return this._commMetadata;
+  get options(): {[key: string]: any} {
+    return this._options;
   }
 
   get ydoc(): Y.Doc {
@@ -130,5 +131,5 @@ export class JupyterYDoc implements IJupyterYDoc {
 
   private _disposed = new Signal<this, void>(this);
   private _ydoc: Y.Doc;
-  private _commMetadata: {[key: string]: any};
+  private _options: {[key: string]: any};
 }

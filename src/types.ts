@@ -18,7 +18,7 @@ export interface IJupyterYDoc extends IDisposable {
 
   attrsChanged: ISignal<IJupyterYDoc, MapChange>;
   ydoc: Y.Doc;
-  commMetadata: {[key: string]: any};
+  options: {[key: string]: any};
   disposed: ISignal<any, void>;
 }
 
@@ -26,6 +26,7 @@ export interface IJupyterYModel extends IDisposable {
   yModelName: string;
   isDisposed: boolean;
   sharedModel: IJupyterYDoc;
+  roomId?: string;
 
   sharedAttrsChanged: ISignal<IJupyterYDoc, MapChange>;
 

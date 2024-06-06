@@ -6,7 +6,7 @@ import { IJupyterYWidgetManager } from './types';
 export class NotebookRendererModel implements IDisposable {
   constructor(options: NotebookRendererModel.IOptions) {
     this._widgetManager = options.widgetManager;
-    this._kernelId = options.kernelId;
+    this._kernelOrNotebookId = options.kernelOrNotebookId;
   }
 
   get isDisposed(): boolean {
@@ -20,15 +20,15 @@ export class NotebookRendererModel implements IDisposable {
     this._isDisposed = true;
   }
 
-  getYModel(commId: string): IJupyterYModel | undefined {
-    if (this._kernelId) {
-      return this._widgetManager.getWidgetModel(this._kernelId, commId);
+  getYModel(commOrRoomId: string): IJupyterYModel | undefined {
+    if (this._kernelOrNotebookId) {
+      return this._widgetManager.getWidgetModel(this._kernelOrNotebookId, commOrRoomId);
     }
   }
 
-  createYWidget(commId: string, node: HTMLElement): void {
-    if (this._kernelId) {
-      const yModel = this._widgetManager.getWidgetModel(this._kernelId, commId);
+  createYWidget(commOrRoomId: string, node: HTMLElement): void {
+    if (this._kernelOrNotebookId) {
+      const yModel = this._widgetManager.getWidgetModel(this._kernelOrNotebookId, commOrRoomId);
       if (yModel) {
         const widgetFactory = this._widgetManager.getWidgetFactory(
           yModel.yModelName
@@ -39,13 +39,13 @@ export class NotebookRendererModel implements IDisposable {
   }
 
   private _isDisposed = false;
-  private _kernelId?: string;
+  private _kernelOrNotebookId?: string;
   private _widgetManager: IJupyterYWidgetManager;
 }
 
 export namespace NotebookRendererModel {
   export interface IOptions {
-    kernelId?: string;
+    kernelOrNotebookId?: string;
     widgetManager: IJupyterYWidgetManager;
   }
 }

@@ -9,8 +9,16 @@ import { YCommProvider } from './yCommProvider';
 import { IJupyterYModel } from '../types';
 
 export class JupyterYWidgetManager implements IJupyterYWidgetManager {
+
+  registerNotebook(notebookId: string): IJupyterYWidgetModelRegistry {
+    const yModelFactories = this.yModelFactories;
+    const wm = new WidgetModelRegistry({ yModelFactories });
+    this._registry.set(notebookId, wm);
+    return wm;
+  }
+
   registerKernel(kernel: Kernel.IKernelConnection): void {
-    const yModelFactories = this._yModelFactories;
+    const yModelFactories = this.yModelFactories;
     const wm = new WidgetModelRegistry({ kernel, yModelFactories });
     this._registry.set(kernel.id, wm);
   }
@@ -26,35 +34,41 @@ export class JupyterYWidgetManager implements IJupyterYWidgetManager {
     yModelFactory: IJupyterYModelFactory,
     yWidgetFactory: IJupyterYWidgetFactory
   ): void {
-    this._yModelFactories.set(name, yModelFactory);
+    this.yModelFactories.set(name, yModelFactory);
     this._yWidgetFactories.set(name, yWidgetFactory);
   }
 
-  getWidgetModel(kernelId: string, commId: string): IJupyterYModel | undefined {
-    return this._registry.get(kernelId)?.getModel(commId);
+  getWidgetModel(kernelOrNotebookId: string, commOrRoomId: string): IJupyterYModel | undefined {
+    return this._registry.get(kernelOrNotebookId)?.getModel(commOrRoomId);
   }
 
   getWidgetFactory(modelName: string) {
     return this._yWidgetFactories.get(modelName);
   }
 
+  yModelFactories = new Map<string, IJupyterYModelFactory>();
   private _registry = new Map<string, IJupyterYWidgetModelRegistry>();
-  private _yModelFactories = new Map<string, IJupyterYModelFactory>();
   private _yWidgetFactories = new Map<string, IJupyterYWidgetFactory>();
 }
 
 export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
   constructor(options: {
-    kernel: Kernel.IKernelConnection;
+    kernel?: Kernel.IKernelConnection;
     yModelFactories: any;
   }) {
     const { kernel, yModelFactories } = options;
     this._yModelFactories = yModelFactories;
-    kernel.registerCommTarget('ywidget', this._handle_comm_open);
+    if (kernel !== undefined) {
+      kernel.registerCommTarget('ywidget', this._handle_comm_open);
+    }
   }
 
   getModel(id: string): IJupyterYModel | undefined {
     return this._yModels.get(id);
+  }
+
+  setModel(id: string, model: IJupyterYModel): void {
+    this._yModels.set(id, model);
   }
 
   /**
