@@ -7,8 +7,8 @@ import { IObservableList } from '@jupyterlab/observables';
 import { Cell, CodeCell, ICellModel } from '@jupyterlab/cells';
 import { YCodeCell } from '@jupyter/ydoc';
 import * as Y from 'yjs';
-import { Panel } from '@lumino/widgets';
-import { Widget } from '@lumino/widgets';
+import { UUID } from '@lumino/coreutils';
+import { Panel, Widget } from '@lumino/widgets';
 import { OutputPrompt } from '@jupyterlab/outputarea';
 
 import { JupyterYWidget } from '../notebookrenderer/view';
@@ -31,9 +31,7 @@ export default class YWidget extends Widget {
   ) {
     super();
     this._panel = panel;
-    this._notebookId = "10000000-1000-4000-8000-100000000000".replace(/[018]/g, c =>
-      (+c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> +c / 4).toString(16)
-    );
+    this._notebookId = UUID.uuid4();
     this._wmManager = wmManager;
     this._wm = wmManager.registerNotebook(this._notebookId);
     const cells = panel.context.model.cells;
@@ -48,7 +46,6 @@ export default class YWidget extends Widget {
     sender: CellList,
     changed: IObservableList.IChangedArgs<ICellModel>
   ): void {
-    //changed.oldValues.forEach(this._unobserveStdinOutput.bind(this));
     changed.newValues.forEach(this._observeYOutput.bind(this));
   }
 

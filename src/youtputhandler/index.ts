@@ -43,8 +43,5 @@ export const yOutputHandler: JupyterFrontEndPlugin<void> = {
       'Notebook',
       new yWidgetExtension(tracker, wmManager)
     );
-
-    // eslint-disable-next-line no-console
-    console.log(`JupyterLab extension ${PLUGIN_NAME} is activated!`);
   },
 };
