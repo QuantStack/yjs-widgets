@@ -21,6 +21,20 @@ class InputWidget {
     );
 
     wsProvider.on('sync', (isSynced) => {
+      const prompt: string = this.yModel.sharedModel.getAttr('prompt');
+      const password: boolean = this.yModel.sharedModel.getAttr('password');
+      const promptNode = document.createElement('pre');
+      promptNode.textContent = prompt;
+      const input1 = document.createElement('div');
+      input1.style.border = 'thin solid';
+      const input2 = document.createElement('div');
+      if (password === true) {
+        (input2.style as any).webkitTextSecurity = 'disc';
+      }
+      input1.appendChild(input2);
+      this.node.appendChild(promptNode);
+      promptNode.appendChild(input1);
+
       const stdin = this.yModel.sharedModel.getAttr('value');
       const ybind = ybinding({ ytext: stdin });
       const submit: StateCommand = ({ state, dispatch }) => {
@@ -34,7 +48,7 @@ class InputWidget {
       new EditorView({
         doc: stdin.toString(),
         extensions: [keymap.of([submitWithEnter]), ybind],
-        parent: this.node
+        parent: input2
       });
     });
   }
