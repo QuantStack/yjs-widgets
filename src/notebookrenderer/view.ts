@@ -28,6 +28,7 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
     this._yModel?.dispose();
     super.dispose();
   }
+
   async renderModel(mimeModel: IRenderMime.IMimeModel): Promise<void> {
     const modelId = mimeModel.data[this._mimeType]!['model_id'];
 
@@ -36,6 +37,14 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
       return;
     }
     this._modelFactory.createYWidget(modelId, this.node);
+  }
+
+  render(roomId: string): void {
+    this._yModel = this._modelFactory.getYModel(roomId);
+    if (!this._yModel) {
+      return;
+    }
+    this._modelFactory.createYWidget(roomId, this.node);
   }
 
   private _modelFactory: NotebookRendererModel;
