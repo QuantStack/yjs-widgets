@@ -3,8 +3,9 @@ import {
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
 import { ISessionContext } from '@jupyterlab/apputils';
+import { ConsolePanel, IConsoleTracker } from '@jupyterlab/console';
 import { IChangedArgs } from '@jupyterlab/coreutils';
-import { INotebookTracker } from '@jupyterlab/notebook';
+import { INotebookTracker, NotebookPanel } from '@jupyterlab/notebook';
 import { IRenderMimeRegistry } from '@jupyterlab/rendermime';
 import { IRenderMime } from '@jupyterlab/rendermime-interfaces';
 import { Kernel } from '@jupyterlab/services';
@@ -47,11 +48,12 @@ export const notebookRenderer: JupyterFrontEndPlugin<void> = {
 export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> = {
   id: 'yjs-widgets:yWidgetManagerPlugin',
   autoStart: true,
-  requires: [INotebookTracker],
+  requires: [INotebookTracker, IConsoleTracker],
   provides: IJupyterYWidgetManager,
   activate: (
     app: JupyterFrontEnd,
-    tracker: INotebookTracker
+    notebookTracker: INotebookTracker,
+    consoleTracker: IConsoleTracker
   ): IJupyterYWidgetManager => {
     const registry = new JupyterYWidgetManager();
     const onKernelChanged = (
@@ -71,11 +73,16 @@ export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> = {
         });
       }
     };
-    tracker.widgetAdded.connect(async (_, notebook) => {
-      notebook.sessionContext.kernelChanged.connect(onKernelChanged);
-      notebook.disposed.connect(() => {
-        notebook.sessionContext.kernelChanged.disconnect(onKernelChanged);
-      });
+
+    [notebookTracker, consoleTracker].forEach(tracker => {
+      tracker.widgetAdded.connect(
+        async (_: any, panel: NotebookPanel | ConsolePanel) => {
+          panel.sessionContext.kernelChanged.connect(onKernelChanged);
+          panel.disposed.connect(() => {
+            panel.sessionContext.kernelChanged.disconnect(onKernelChanged);
+          });
+        }
+      );
     });
 
     return registry;
