@@ -1,6 +1,6 @@
 {
   "name": "yjs-widgets",
-  "version": "0.3.4",
+  "version": "0.3.5",
   "description": "A JupyterLab extension for widgets based on Yjs.",
   "keywords": [
     "jupyter",
