@@ -49,7 +49,6 @@
     "watch:labextension": "jupyter labextension watch ."
   },
   "dependencies": {
-    "@jupyter-widgets/base": "^6.0.2",
     "@jupyter/collaboration": "^2.0.0",
     "@jupyter/ydoc": "^2.0.0",
     "@jupyterlab/application": "^4.0.0",
@@ -98,7 +97,6 @@
   },
   "jupyterlab": {
     "extension": true,
-    "outputDir": "yjs_widgets/labextension",
-    "webpackConfig": "./extension.webpack.config.js"
+    "outputDir": "yjs_widgets/labextension"
   }
 }
