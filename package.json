@@ -98,7 +98,6 @@
   },
   "jupyterlab": {
     "extension": true,
-    "outputDir": "yjs_widgets/labextension",
-    "webpackConfig": "./extension.webpack.config.js"
+    "outputDir": "yjs_widgets/labextension"
   }
 }
