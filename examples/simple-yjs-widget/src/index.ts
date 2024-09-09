@@ -14,7 +14,9 @@ class MyWidget {
     yModel.sharedModel.attrsChanged.connect(() => {
       this._attrsChanged();
     });
-    setInterval(() => {this._changeAttrs();}, 1000);
+    setInterval(() => {
+      this._changeAttrs();
+    }, 1000);
     this._changeAttrs();
   }
 
@@ -42,7 +44,10 @@ const simple: JupyterFrontEndPlugin<void> = {
   id: 'example:simple',
   autoStart: true,
   requires: [YjsWidgets.IJupyterYWidgetManager],
-  activate: (app: JupyterFrontEnd, wm: YjsWidgets.IJupyterYWidgetManager): void => {
+  activate: (
+    app: JupyterFrontEnd,
+    wm: YjsWidgets.IJupyterYWidgetManager
+  ): void => {
     wm.registerWidget('MyWidget', YjsWidgets.JupyterYModel, MyWidget);
   }
 };

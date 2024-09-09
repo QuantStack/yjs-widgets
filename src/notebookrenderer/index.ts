@@ -48,12 +48,13 @@ export const notebookRenderer: JupyterFrontEndPlugin<void> = {
 export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> = {
   id: 'yjs-widgets:yWidgetManagerPlugin',
   autoStart: true,
-  requires: [INotebookTracker, IConsoleTracker],
+  requires: [],
+  optional: [INotebookTracker, IConsoleTracker],
   provides: IJupyterYWidgetManager,
   activate: (
     app: JupyterFrontEnd,
-    notebookTracker: INotebookTracker,
-    consoleTracker: IConsoleTracker
+    notebookTracker?: INotebookTracker,
+    consoleTracker?: IConsoleTracker
   ): IJupyterYWidgetManager => {
     const registry = new JupyterYWidgetManager();
     const onKernelChanged = (
@@ -75,6 +76,9 @@ export const yWidgetManager: JupyterFrontEndPlugin<IJupyterYWidgetManager> = {
     };
 
     [notebookTracker, consoleTracker].forEach(tracker => {
+      if (!tracker) {
+        return;
+      }
       tracker.widgetAdded.connect(
         async (_: any, panel: NotebookPanel | ConsolePanel) => {
           panel.sessionContext.kernelChanged.connect(onKernelChanged);

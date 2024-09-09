@@ -6,7 +6,7 @@ import * as Y from 'yjs';
 import { IJupyterYDoc, IJupyterYModel } from './types';
 
 export class JupyterYModel implements IJupyterYModel {
-  constructor(commMetadata: {[key: string]: any}) {
+  constructor(commMetadata: { [key: string]: any }) {
     this._yModelName = commMetadata.ymodel_name;
     const ydoc = this.ydocFactory(commMetadata);
     this._sharedModel = new JupyterYDoc(commMetadata, ydoc);
@@ -32,7 +32,7 @@ export class JupyterYModel implements IJupyterYModel {
     return this._isDisposed;
   }
 
-  ydocFactory(commMetadata: {[key: string]: any}): Y.Doc {
+  ydocFactory(commMetadata: { [key: string]: any }): Y.Doc {
     return new Y.Doc();
   }
 
@@ -63,7 +63,7 @@ export class JupyterYModel implements IJupyterYModel {
 }
 
 export class JupyterYDoc implements IJupyterYDoc {
-  constructor(commMetadata: {[key: string]: any}, ydoc: Y.Doc) {
+  constructor(commMetadata: { [key: string]: any }, ydoc: Y.Doc) {
     this._commMetadata = commMetadata;
     this._ydoc = ydoc;
     if (commMetadata.create_ydoc) {
@@ -72,7 +72,7 @@ export class JupyterYDoc implements IJupyterYDoc {
     }
   }
 
-  get commMetadata(): {[key: string]: any} {
+  get commMetadata(): { [key: string]: any } {
     return this._commMetadata;
   }
 
@@ -130,5 +130,5 @@ export class JupyterYDoc implements IJupyterYDoc {
 
   private _disposed = new Signal<this, void>(this);
   private _ydoc: Y.Doc;
-  private _commMetadata: {[key: string]: any};
+  private _commMetadata: { [key: string]: any };
 }
