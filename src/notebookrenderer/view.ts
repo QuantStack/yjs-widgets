@@ -30,6 +30,7 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
     this._yModel?.dispose();
     super.dispose();
   }
+
   async renderModel(mimeModel: IRenderMime.IMimeModel): Promise<void> {
     const modelId = mimeModel.data[this._mimeType]!['model_id'];
 
@@ -37,6 +38,9 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
     if (!this._yModel) {
       return;
     }
+
+    await this._yModel.ready;
+
     this._ywidget = this._modelFactory.createYWidget(modelId, this.node);
   }
 

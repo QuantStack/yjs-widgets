@@ -1,5 +1,5 @@
 import { MapChange } from '@jupyter/ydoc';
-import { JSONExt, JSONObject } from '@lumino/coreutils';
+import { JSONExt, JSONObject, PromiseDelegate } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import * as Y from 'yjs';
 
@@ -8,8 +8,11 @@ import { IJupyterYDoc, IJupyterYModel } from './types';
 export class JupyterYModel implements IJupyterYModel {
   constructor(commMetadata: { [key: string]: any }) {
     this._yModelName = commMetadata.ymodel_name;
-    const ydoc = this.ydocFactory(commMetadata);
-    this._sharedModel = new JupyterYDoc(commMetadata, ydoc);
+    this.ydocFactory(commMetadata).then(async (ydoc) => {
+      this._sharedModel = await this.sharedModelFactory(commMetadata, ydoc);
+
+      this._ready.resolve();
+    });
   }
 
   get yModelName(): string {
@@ -32,8 +35,16 @@ export class JupyterYModel implements IJupyterYModel {
     return this._isDisposed;
   }
 
-  ydocFactory(commMetadata: { [key: string]: any }): Y.Doc {
+  get ready(): Promise<void> {
+    return this._ready.promise;
+  }
+
+  async ydocFactory(commMetadata: { [key: string]: any }): Promise<Y.Doc> {
     return new Y.Doc();
+  }
+
+  async sharedModelFactory(commMetadata: { [key: string]: any }, ydoc: Y.Doc) {
+    return new JupyterYDoc(commMetadata, ydoc);
   }
 
   dispose(): void {
@@ -58,6 +69,8 @@ export class JupyterYModel implements IJupyterYModel {
   private _sharedModel: IJupyterYDoc;
 
   private _isDisposed = false;
+
+  private _ready: PromiseDelegate<void> = new PromiseDelegate<void>();
 
   private _disposed = new Signal<this, void>(this);
 }
