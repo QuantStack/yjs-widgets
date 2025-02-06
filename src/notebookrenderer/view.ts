@@ -23,10 +23,10 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
   }
 
   dispose(): void {
-    this._ywidget?.dispose?.();
     if (this.isDisposed) {
       return;
     }
+    this._ywidget?.dispose?.();
     this._yModel?.dispose();
     super.dispose();
   }
