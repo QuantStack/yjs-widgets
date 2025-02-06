@@ -79,8 +79,11 @@ export class JupyterYDoc implements IJupyterYDoc {
   get ydoc(): Y.Doc {
     return this._ydoc;
   }
-  get attrs(): JSONObject {
-    return JSONExt.deepCopy(this._attrs.toJSON());
+  get attrs(): JSONObject | null {
+    if (this._attrs) {
+      return JSONExt.deepCopy(this._attrs.toJSON());
+    }
+    return null;
   }
 
   get attrsChanged(): ISignal<IJupyterYDoc, MapChange> {
@@ -99,22 +102,22 @@ export class JupyterYDoc implements IJupyterYDoc {
     if (this._isDisposed) {
       return;
     }
-    this._attrs.unobserve(this._attrsObserver);
+    this._attrs?.unobserve(this._attrsObserver);
     this._disposed.emit();
     Signal.clearData(this);
     this._isDisposed = true;
   }
 
   getAttr(key: string): any {
-    return this._attrs.get(key);
+    return this._attrs?.get(key);
   }
 
   setAttr(key: string, value: any): void {
-    this._attrs.set(key, value);
+    this._attrs?.set(key, value);
   }
 
   removeAttr(key: string): void {
-    if (this._attrs.has(key)) {
+    if (this._attrs?.has(key)) {
       this._attrs.delete(key);
     }
   }
@@ -123,7 +126,7 @@ export class JupyterYDoc implements IJupyterYDoc {
     this._attrsChanged.emit(event.keys);
   };
 
-  private _attrs: Y.Map<string>;
+  private _attrs?: Y.Map<string>;
   private _attrsChanged = new Signal<IJupyterYDoc, MapChange>(this);
 
   private _isDisposed = false;

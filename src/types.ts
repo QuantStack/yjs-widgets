@@ -10,7 +10,7 @@ export interface IJupyterYDocChange {
 }
 
 export interface IJupyterYDoc extends IDisposable {
-  attrs: JSONObject;
+  attrs: JSONObject | null;
 
   getAttr(key: string): any;
   setAttr(key: string, value: any): void;
