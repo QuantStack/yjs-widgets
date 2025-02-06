@@ -22,7 +22,7 @@ export interface IJupyterYWidgetManager {
     yWidgetFactory: IJupyterYWidgetFactory
   ): void;
   getWidgetModel(kernelId: string, commId: string): IJupyterYModel | undefined;
-  getWidgetFactory(modelName: string): any | undefined;
+  getWidgetFactory(modelName: string): IJupyterYWidgetFactory | undefined;
 }
 
 export const IJupyterYWidgetManager = new Token<IJupyterYWidgetManager>(
@@ -33,4 +33,5 @@ export const IJupyterYWidgetManager = new Token<IJupyterYWidgetManager>(
 export interface IJupyterYWidget {
   node: HTMLElement;
   yModel: IJupyterYModel;
+  dispose?(): void;
 }

@@ -4,6 +4,7 @@ import { Widget } from '@lumino/widgets';
 import { NotebookRendererModel } from './model';
 import { IRenderMime } from '@jupyterlab/rendermime';
 import { IJupyterYModel } from '../types';
+import { IJupyterYWidget } from './types';
 
 export const CLASS_NAME = 'mimerenderer-jupyterywidget';
 
@@ -25,6 +26,7 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
     if (this.isDisposed) {
       return;
     }
+    this._ywidget?.dispose?.();
     this._yModel?.dispose();
     super.dispose();
   }
@@ -35,10 +37,11 @@ export class JupyterYWidget extends Widget implements IRenderMime.IRenderer {
     if (!this._yModel) {
       return;
     }
-    this._modelFactory.createYWidget(modelId, this.node);
+    this._ywidget = this._modelFactory.createYWidget(modelId, this.node);
   }
 
   private _modelFactory: NotebookRendererModel;
   private _mimeType: string;
   private _yModel?: IJupyterYModel;
+  private _ywidget?: IJupyterYWidget;
 }

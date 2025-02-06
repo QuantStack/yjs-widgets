@@ -1,7 +1,7 @@
 import { IDisposable } from '@lumino/disposable';
 
 import { IJupyterYModel } from '../types';
-import { IJupyterYWidgetManager } from './types';
+import { IJupyterYWidget, IJupyterYWidgetManager } from './types';
 
 export class NotebookRendererModel implements IDisposable {
   constructor(options: NotebookRendererModel.IOptions) {
@@ -26,14 +26,19 @@ export class NotebookRendererModel implements IDisposable {
     }
   }
 
-  createYWidget(commId: string, node: HTMLElement): void {
+  createYWidget(
+    commId: string,
+    node: HTMLElement
+  ): IJupyterYWidget | undefined {
     if (this._kernelId) {
       const yModel = this._widgetManager.getWidgetModel(this._kernelId, commId);
       if (yModel) {
         const widgetFactory = this._widgetManager.getWidgetFactory(
           yModel.yModelName
         );
-        new widgetFactory(yModel, node);
+        if (widgetFactory) {
+          return new widgetFactory(yModel, node);
+        }
       }
     }
   }

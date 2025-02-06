@@ -34,7 +34,7 @@ export class JupyterYWidgetManager implements IJupyterYWidgetManager {
     return this._registry.get(kernelId)?.getModel(commId);
   }
 
-  getWidgetFactory(modelName: string) {
+  getWidgetFactory(modelName: string): IJupyterYWidgetFactory | undefined {
     return this._yWidgetFactories.get(modelName);
   }
 
