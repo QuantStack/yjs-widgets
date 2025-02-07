@@ -2,6 +2,22 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.4.0
+
+([Full Changelog](https://github.com/QuantStack/yjs-widgets/compare/v0.3.9...814b213b1c9b7994b3ae6dc36ac518e4bffe19cc))
+
+### Enhancements made
+
+- Add support for async model creation [#22](https://github.com/QuantStack/yjs-widgets/pull/22) ([@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+([GitHub contributors page for this release](https://github.com/QuantStack/yjs-widgets/graphs/contributors?from=2025-02-06&to=2025-02-07&type=c))
+
+[@martinRenou](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3AmartinRenou+updated%3A2025-02-06..2025-02-07&type=Issues)
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.3.9
 
 ([Full Changelog](https://github.com/QuantStack/yjs-widgets/compare/v0.3.8...219122537a4ad3c3e888685ab440ec304ab79fc8))
@@ -16,8 +32,6 @@
 ([GitHub contributors page for this release](https://github.com/QuantStack/yjs-widgets/graphs/contributors?from=2024-10-22&to=2025-02-06&type=c))
 
 [@brichet](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3Abrichet+updated%3A2024-10-22..2025-02-06&type=Issues) | [@trungleduc](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3Atrungleduc+updated%3A2024-10-22..2025-02-06&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.8
 
