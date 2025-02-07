@@ -8,9 +8,7 @@ import { IJupyterYDoc, IJupyterYModel } from './types';
 export class JupyterYModel implements IJupyterYModel {
   constructor(commMetadata: { [key: string]: any }) {
     this._yModelName = commMetadata.ymodel_name;
-    this.ydocFactory(commMetadata).then(async (ydoc) => {
-      this._sharedModel = await this.sharedModelFactory(commMetadata, ydoc);
-
+    this.initialize(commMetadata).then(() => {
       this._ready.resolve();
     });
   }
@@ -21,6 +19,18 @@ export class JupyterYModel implements IJupyterYModel {
 
   get sharedModel(): IJupyterYDoc {
     return this._sharedModel;
+  }
+
+  get ydoc(): Y.Doc {
+    return this._ydoc;
+  }
+
+  protected set sharedModel(value: IJupyterYDoc) {
+    this._sharedModel = value;
+  }
+
+  protected set ydoc(value: Y.Doc) {
+    this._ydoc = value;
   }
 
   get sharedAttrsChanged(): ISignal<IJupyterYDoc, MapChange> {
@@ -39,12 +49,13 @@ export class JupyterYModel implements IJupyterYModel {
     return this._ready.promise;
   }
 
-  async ydocFactory(commMetadata: { [key: string]: any }): Promise<Y.Doc> {
-    return new Y.Doc();
+  protected async initialize(commMetadata: { [key: string]: any }) {
+    this.ydoc = this.ydocFactory(commMetadata);
+    this.sharedModel = new JupyterYDoc(commMetadata, this._ydoc);
   }
 
-  async sharedModelFactory(commMetadata: { [key: string]: any }, ydoc: Y.Doc) {
-    return new JupyterYDoc(commMetadata, ydoc);
+  ydocFactory(commMetadata: { [key: string]: any }): Y.Doc {
+    return new Y.Doc();
   }
 
   dispose(): void {
@@ -64,6 +75,8 @@ export class JupyterYModel implements IJupyterYModel {
   removeAttr(key: string): void {
     this.sharedModel.removeAttr(key);
   }
+
+  private _ydoc: Y.Doc;
 
   private _yModelName: string;
   private _sharedModel: IJupyterYDoc;
