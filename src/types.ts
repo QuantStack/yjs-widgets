@@ -30,4 +30,6 @@ export interface IJupyterYModel extends IDisposable {
   sharedAttrsChanged: ISignal<IJupyterYDoc, MapChange>;
 
   disposed: ISignal<any, void>;
+
+  ready: Promise<void>;
 }

@@ -1,5 +1,5 @@
 import { MapChange } from '@jupyter/ydoc';
-import { JSONExt, JSONObject } from '@lumino/coreutils';
+import { JSONExt, JSONObject, PromiseDelegate } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import * as Y from 'yjs';
 
@@ -8,8 +8,9 @@ import { IJupyterYDoc, IJupyterYModel } from './types';
 export class JupyterYModel implements IJupyterYModel {
   constructor(commMetadata: { [key: string]: any }) {
     this._yModelName = commMetadata.ymodel_name;
-    const ydoc = this.ydocFactory(commMetadata);
-    this._sharedModel = new JupyterYDoc(commMetadata, ydoc);
+    this.initialize(commMetadata).then(() => {
+      this._ready.resolve();
+    });
   }
 
   get yModelName(): string {
@@ -18,6 +19,18 @@ export class JupyterYModel implements IJupyterYModel {
 
   get sharedModel(): IJupyterYDoc {
     return this._sharedModel;
+  }
+
+  get ydoc(): Y.Doc {
+    return this._ydoc;
+  }
+
+  protected set sharedModel(value: IJupyterYDoc) {
+    this._sharedModel = value;
+  }
+
+  protected set ydoc(value: Y.Doc) {
+    this._ydoc = value;
   }
 
   get sharedAttrsChanged(): ISignal<IJupyterYDoc, MapChange> {
@@ -30,6 +43,15 @@ export class JupyterYModel implements IJupyterYModel {
 
   get isDisposed(): boolean {
     return this._isDisposed;
+  }
+
+  get ready(): Promise<void> {
+    return this._ready.promise;
+  }
+
+  protected async initialize(commMetadata: { [key: string]: any }) {
+    this.ydoc = this.ydocFactory(commMetadata);
+    this.sharedModel = new JupyterYDoc(commMetadata, this._ydoc);
   }
 
   ydocFactory(commMetadata: { [key: string]: any }): Y.Doc {
@@ -54,10 +76,14 @@ export class JupyterYModel implements IJupyterYModel {
     this.sharedModel.removeAttr(key);
   }
 
+  private _ydoc: Y.Doc;
+
   private _yModelName: string;
   private _sharedModel: IJupyterYDoc;
 
   private _isDisposed = false;
+
+  private _ready: PromiseDelegate<void> = new PromiseDelegate<void>();
 
   private _disposed = new Signal<this, void>(this);
 }

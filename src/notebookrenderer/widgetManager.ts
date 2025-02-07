@@ -69,6 +69,8 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
     );
     const yModel: IJupyterYModel = new yModelFactory(msg.metadata);
 
+    await yModel.ready;
+
     new YCommProvider({
       comm,
       ydoc: yModel.sharedModel.ydoc
