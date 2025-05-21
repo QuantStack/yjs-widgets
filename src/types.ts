@@ -3,6 +3,7 @@ import * as Y from 'yjs';
 import { ISignal } from '@lumino/signaling';
 import { JSONObject } from '@lumino/coreutils';
 import { IDisposable } from '@lumino/disposable';
+import { YCommProvider } from './notebookrenderer/yCommProvider';
 
 export interface IJupyterYDocChange {
   attrsChange?: MapChange;
@@ -26,10 +27,14 @@ export interface IJupyterYModel extends IDisposable {
   yModelName: string;
   isDisposed: boolean;
   sharedModel: IJupyterYDoc;
+  yCommProvider: YCommProvider;
 
   sharedAttrsChanged: ISignal<IJupyterYDoc, MapChange>;
 
   disposed: ISignal<any, void>;
 
   ready: Promise<void>;
+
+  send(message: Uint8Array);
+  onReceive(callback: (message: Uint8Array) => void);
 }

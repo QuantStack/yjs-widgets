@@ -17,6 +17,16 @@ export class YCommProvider implements IDisposable {
     this._connect();
   }
 
+  onReceive(callback: (message: Uint8Array) => void) {
+    this._onReceive = callback;
+  }
+
+  send(message: Uint8Array) {
+    const messageType = new Uint8Array([2]);
+    const msg = new Uint8Array([...messageType, ...message]);
+    this._sendOverComm(msg);
+  }
+
   get doc(): Y.Doc {
     return this._ydoc;
   }
@@ -47,9 +57,15 @@ export class YCommProvider implements IDisposable {
       const buffer_uint8 = new Uint8Array(
         ArrayBuffer.isView(buffer) ? buffer.buffer : buffer
       );
-      const encoder = Private.readMessage(this, buffer_uint8, true);
-      if (encoding.length(encoder) > 1) {
-        this._sendOverComm(encoding.toUint8Array(encoder));
+      if (buffer_uint8.slice(0, 1)[0] === 2) {
+        if (this._onReceive !== null) {
+          this._onReceive(buffer_uint8.slice(1));
+        }
+      } else {
+        const encoder = Private.readMessage(this, buffer_uint8, true);
+        if (encoding.length(encoder) > 1) {
+          this._sendOverComm(encoding.toUint8Array(encoder));
+        }
       }
     }
   };
@@ -81,6 +97,7 @@ export class YCommProvider implements IDisposable {
   private _ydoc: Y.Doc;
   private _synced: boolean;
   private _isDisposed = false;
+  private _onReceive: ((message: Uint8Array) => void) | null = null;
 }
 
 namespace Private {

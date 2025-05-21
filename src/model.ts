@@ -3,6 +3,7 @@ import { JSONExt, JSONObject, PromiseDelegate } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import * as Y from 'yjs';
 
+import { YCommProvider } from './notebookrenderer/yCommProvider';
 import { IJupyterYDoc, IJupyterYModel } from './types';
 
 export class JupyterYModel implements IJupyterYModel {
@@ -11,6 +12,14 @@ export class JupyterYModel implements IJupyterYModel {
     this.initialize(commMetadata).then(() => {
       this._ready.resolve();
     });
+  }
+
+  onReceive(callback: (message: Uint8Array) => void) {
+    this.yCommProvider.onReceive(callback);
+  }
+
+  send(message: Uint8Array) {
+    this.yCommProvider.send(message);
   }
 
   get yModelName(): string {
@@ -76,6 +85,7 @@ export class JupyterYModel implements IJupyterYModel {
     this.sharedModel.removeAttr(key);
   }
 
+  yCommProvider: YCommProvider;
   private _ydoc: Y.Doc;
 
   private _yModelName: string;
