@@ -71,11 +71,12 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
 
     await yModel.ready;
 
-    new YCommProvider({
+    const yCommProvider = new YCommProvider({
       comm,
       ydoc: yModel.sharedModel.ydoc
     });
     this._yModels.set(comm.commId, yModel);
+    yModel.yCommProvider = yCommProvider;
   };
 
   private _yModels: Map<string, IJupyterYModel> = new Map();
