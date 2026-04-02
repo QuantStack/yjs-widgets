@@ -73,7 +73,8 @@ export class WidgetModelRegistry implements IJupyterYWidgetModelRegistry {
 
     new YCommProvider({
       comm,
-      ydoc: yModel.sharedModel.ydoc
+      ydoc: yModel.sharedModel.ydoc,
+      awareness: yModel.awareness
     });
     this._yModels.set(comm.commId, yModel);
   };
