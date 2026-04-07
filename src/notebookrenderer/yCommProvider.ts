@@ -185,7 +185,7 @@ namespace Private {
         break;
       }
       default:
-        break;
+        console.error('Unable to compute message');
     }
     return encoder;
   }
