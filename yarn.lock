@@ -5728,6 +5728,17 @@ __metadata:
   languageName: node
   linkType: hard
 
+"y-protocols@npm:^1.0.6":
+  version: 1.0.7
+  resolution: "y-protocols@npm:1.0.7"
+  dependencies:
+    lib0: ^0.2.85
+  peerDependencies:
+    yjs: ^13.0.0
+  checksum: d58579ee542b6b9f4e3c3223fd24efcfd4af6f97acdb40a3d362713dcce812dd3dd086cc1f221a6ccb50bd373ff4b3d30fc2462a17f7804e0d1a8bd187099f31
+  languageName: node
+  linkType: hard
+
 "yjs-widgets@workspace:.":
   version: 0.0.0-use.local
   resolution: "yjs-widgets@workspace:."
@@ -5761,6 +5772,7 @@ __metadata:
     uuid: ^9.0.0
     webpack: ^5.77.0
     webpack-cli: ^5.0.1
+    y-protocols: ^1.0.6
   languageName: unknown
   linkType: soft
 
