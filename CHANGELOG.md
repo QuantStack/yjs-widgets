@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.5.0
+
+([Full Changelog](https://github.com/QuantStack/yjs-widgets/compare/v0.4.0...64a1ae96749cc152ee436ceca80b82c698e856ba))
+
+### Enhancements made
+
+- Route Yjs awareness over the ywidget comm [#24](https://github.com/QuantStack/yjs-widgets/pull/24) ([@gjmooney](https://github.com/gjmooney), [@davidbrochart](https://github.com/davidbrochart), [@martinRenou](https://github.com/martinRenou))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/QuantStack/yjs-widgets/graphs/contributors?from=2025-02-07&to=2026-04-07&type=c))
+
+@davidbrochart ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3Adavidbrochart+updated%3A2025-02-07..2026-04-07&type=Issues)) | @gjmooney ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3Agjmooney+updated%3A2025-02-07..2026-04-07&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3AmartinRenou+updated%3A2025-02-07..2026-04-07&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.4.0
 
 ([Full Changelog](https://github.com/QuantStack/yjs-widgets/compare/v0.3.9...814b213b1c9b7994b3ae6dc36ac518e4bffe19cc))
@@ -15,8 +34,6 @@
 ([GitHub contributors page for this release](https://github.com/QuantStack/yjs-widgets/graphs/contributors?from=2025-02-06&to=2025-02-07&type=c))
 
 [@martinRenou](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3AmartinRenou+updated%3A2025-02-06..2025-02-07&type=Issues)
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.3.9
 
