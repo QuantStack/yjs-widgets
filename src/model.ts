@@ -3,6 +3,7 @@ import { JSONExt, JSONObject, PromiseDelegate } from '@lumino/coreutils';
 import { ISignal, Signal } from '@lumino/signaling';
 import * as Y from 'yjs';
 
+import type { Awareness } from 'y-protocols/awareness';
 import { IJupyterYDoc, IJupyterYModel } from './types';
 
 export class JupyterYModel implements IJupyterYModel {
@@ -47,6 +48,13 @@ export class JupyterYModel implements IJupyterYModel {
 
   get ready(): Promise<void> {
     return this._ready.promise;
+  }
+
+  /**
+   * Override in subclasses that attach to a @jupyter/ydoc YDocument
+   */
+  get awareness(): Awareness | undefined {
+    return undefined;
   }
 
   protected async initialize(commMetadata: { [key: string]: any }) {

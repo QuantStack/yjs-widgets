@@ -62,7 +62,8 @@
         "lib0": "^0.2.76",
         "uuid": "^9.0.0",
         "webpack": "^5.77.0",
-        "webpack-cli": "^5.0.1"
+        "webpack-cli": "^5.0.1",
+        "y-protocols": "^1.0.6"
     },
     "resolutions": {
         "@jupyterlab/apputils": "~4.0.0",

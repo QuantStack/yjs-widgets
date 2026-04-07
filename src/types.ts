@@ -3,6 +3,7 @@ import * as Y from 'yjs';
 import { ISignal } from '@lumino/signaling';
 import { JSONObject } from '@lumino/coreutils';
 import { IDisposable } from '@lumino/disposable';
+import type { Awareness } from 'y-protocols/awareness';
 
 export interface IJupyterYDocChange {
   attrsChange?: MapChange;
@@ -32,4 +33,10 @@ export interface IJupyterYModel extends IDisposable {
   disposed: ISignal<any, void>;
 
   ready: Promise<void>;
+
+  /**
+   * When set YCommProvider uses this Awareness
+   * instead of creating a second instance on the same Y.Doc
+   */
+  awareness?: Awareness;
 }
