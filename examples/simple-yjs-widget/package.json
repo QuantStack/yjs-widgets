@@ -81,6 +81,12 @@
   "jupyterlab": {
     "extension": true,
     "outputDir": "simple_yjs_widget/labextension",
-    "webpackConfig": "./extension.webpack.config.js"
+    "webpackConfig": "./extension.webpack.config.js",
+    "sharedPackages": {
+      "yjs-widgets": {
+        "singleton": true,
+        "bundled": false
+      }
+    }
   }
 }
