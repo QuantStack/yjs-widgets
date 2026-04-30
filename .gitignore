@@ -120,7 +120,11 @@ ui-tests/test-results/
 ui-tests/playwright-report/
 
 examples/*.ipynb
-# Hatchling 
+# Hatchling
 yjs_widgets/_version.py
 
 .yarn/
+
+# Generated code and extension
+examples/simple-yjs-widget/simple_yjs_widget/_version.py
+examples/simple-yjs-widget/simple_yjs_widget/labextension/
