@@ -30,20 +30,29 @@ class MySlider {
 
     this._stateChanged();
 
+    this.slider.onchange = this._sliderChanged.bind(this);
+
     node.appendChild(this.slider);
   }
 
   _stateChanged(): void {
-    this.slider.setAttribute('min', this.state.get('min'));
-    this.slider.setAttribute('max', this.state.get('max'));
-    this.slider.setAttribute('value', this.state.get('value'));
-    this.slider.setAttribute('step', this.state.get('step'));
+    this.slider.min = this.state.get('min');
+    this.slider.max = this.state.get('max');
+    this.slider.value = this.state.get('value');
+    this.slider.step = this.state.get('step');
+  }
+
+  _sliderChanged(): void {
+    this.state.set('min', parseInt(this.slider.min ?? '0'));
+    this.state.set('max', parseInt(this.slider.max ?? '100'));
+    this.state.set('value', parseInt(this.slider.value ?? '50'));
+    this.state.set('step', parseInt(this.slider.step ?? '1'));
   }
 
   state: Y.Map<any>;
   yModel: IJupyterYModel;
   node: HTMLElement;
-  slider: HTMLElement;
+  slider: HTMLInputElement;
 }
 
 const simple: JupyterFrontEndPlugin<void> = {
