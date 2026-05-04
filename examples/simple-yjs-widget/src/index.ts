@@ -28,25 +28,24 @@ class MySlider {
     this.state.set('value', 50);
     this.state.set('step', 1);
 
-    this._stateChanged();
+    this.slider.min = this.state.get('min');
+    this.slider.max = this.state.get('max');
+    this.slider.value = this.state.get('value');
+    this.slider.step = this.state.get('step');
 
     this.slider.onchange = this._sliderChanged.bind(this);
 
     node.appendChild(this.slider);
   }
 
-  _stateChanged(): void {
-    this.slider.min = this.state.get('min');
-    this.slider.max = this.state.get('max');
-    this.slider.value = this.state.get('value');
-    this.slider.step = this.state.get('step');
+  _stateChanged(change: Y.YMapEvent<any>): void {
+    for (const key of change.keysChanged) {
+      this.slider[key] = change.target.toJSON()[key];
+    }
   }
 
   _sliderChanged(): void {
-    this.state.set('min', parseInt(this.slider.min ?? '0'));
-    this.state.set('max', parseInt(this.slider.max ?? '100'));
     this.state.set('value', parseInt(this.slider.value ?? '50'));
-    this.state.set('step', parseInt(this.slider.step ?? '1'));
   }
 
   state: Y.Map<any>;
