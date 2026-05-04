@@ -23,11 +23,6 @@ class MySlider {
     this.slider = document.createElement('input');
     this.slider.setAttribute('type', 'range');
 
-    this.state.set('min', 0);
-    this.state.set('max', 100);
-    this.state.set('value', 50);
-    this.state.set('step', 1);
-
     this.slider.min = this.state.get('min');
     this.slider.max = this.state.get('max');
     this.slider.value = this.state.get('value');
