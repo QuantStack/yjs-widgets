@@ -1,49 +1,46 @@
 import {
   IJupyterYModel,
   JupyterYModel,
-  IJupyterYWidgetManager
+  IJupyterYWidgetManager,
+  IJupyterYDoc
 } from 'yjs-widgets';
-
-import * as Y from 'yjs';
 
 import {
   JupyterFrontEnd,
   JupyterFrontEndPlugin
 } from '@jupyterlab/application';
+import { MapChange } from '@jupyter/ydoc';
 
 class MySlider {
   constructor(yModel: IJupyterYModel, node: HTMLElement) {
     this.yModel = yModel;
     this.node = node;
 
-    this.state = this.yModel.sharedModel.ydoc.getMap('state');
-
-    this.state.observe(this._stateChanged.bind(this));
-
     this.slider = document.createElement('input');
     this.slider.setAttribute('type', 'range');
 
-    this.slider.min = this.state.get('min');
-    this.slider.max = this.state.get('max');
-    this.slider.value = this.state.get('value');
-    this.slider.step = this.state.get('step');
+    this.yModel.sharedModel.attrsChanged.connect(this._stateChanged.bind(this));
+
+    this.slider.min = this.yModel.sharedModel.getAttr('min');
+    this.slider.max = this.yModel.sharedModel.getAttr('max');
+    this.slider.value = this.yModel.sharedModel.getAttr('value');
+    this.slider.step = this.yModel.sharedModel.getAttr('step');
 
     this.slider.onchange = this._sliderChanged.bind(this);
 
     node.appendChild(this.slider);
   }
 
-  _stateChanged(change: Y.YMapEvent<any>): void {
-    for (const key of change.keysChanged) {
-      this.slider[key] = change.target.toJSON()[key];
+  _stateChanged(_: IJupyterYDoc, change: MapChange): void {
+    for (const key of change.keys()) {
+      this.slider[key] = this.yModel.sharedModel.getAttr(key);
     }
   }
 
   _sliderChanged(): void {
-    this.state.set('value', parseInt(this.slider.value ?? '50'));
+    this.yModel.sharedModel.setAttr('value', parseInt(this.slider.value ?? '50'));
   }
 
-  state: Y.Map<any>;
   yModel: IJupyterYModel;
   node: HTMLElement;
   slider: HTMLInputElement;
