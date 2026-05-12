@@ -126,5 +126,5 @@ yjs_widgets/_version.py
 .yarn/
 
 # Generated code and extension
-examples/simple-yjs-widget/simple_yjs_widget/_version.py
-examples/simple-yjs-widget/simple_yjs_widget/labextension/
+examples/yjs-widget-controls/yjs_widget_controls/_version.py
+examples/yjs-widget-controls/yjs_widget_controls/labextension/

@@ -4978,31 +4978,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"simple-yjs-widget@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "simple-yjs-widget@workspace:."
-  dependencies:
-    "@jupyterlab/builder": ^4
-    "@types/node": ^16.11.10
-    "@typescript-eslint/eslint-plugin": ^4.8.1
-    "@typescript-eslint/parser": ^4.8.1
-    copy-webpack-plugin: ^10.0.0
-    eslint: ^7.14.0
-    eslint-config-prettier: ^6.15.0
-    eslint-plugin-prettier: ^3.1.4
-    file-loader: ^6.2.0
-    npm-run-all: ^4.1.5
-    prettier: ^2.1.1
-    rimraf: ^3.0.2
-    source-map-loader: ^3.0.0
-    ts-loader: ^9.2.6
-    typescript: ~5.0.4
-    webpack: ^5.77.0
-    webpack-cli: ^5.0.1
-    yjs-widgets: ^0.3.3
-  languageName: unknown
-  linkType: soft
-
 "slash@npm:^3.0.0":
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
@@ -5888,6 +5863,31 @@ __metadata:
   checksum: 343617202af32df2a15a3be36a5a8c0c8545208f3d3dfbc6bb7c3e3b7e8c6f8e7485432e4f3b88da3031a6e20afa7c711eded32ddfb122896ac5d914e75848d5
   languageName: node
   linkType: hard
+
+"yjs-widget-controls@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "yjs-widget-controls@workspace:."
+  dependencies:
+    "@jupyterlab/builder": ^4
+    "@types/node": ^16.11.10
+    "@typescript-eslint/eslint-plugin": ^4.8.1
+    "@typescript-eslint/parser": ^4.8.1
+    copy-webpack-plugin: ^10.0.0
+    eslint: ^7.14.0
+    eslint-config-prettier: ^6.15.0
+    eslint-plugin-prettier: ^3.1.4
+    file-loader: ^6.2.0
+    npm-run-all: ^4.1.5
+    prettier: ^2.1.1
+    rimraf: ^3.0.2
+    source-map-loader: ^3.0.0
+    ts-loader: ^9.2.6
+    typescript: ~5.0.4
+    webpack: ^5.77.0
+    webpack-cli: ^5.0.1
+    yjs-widgets: ^0.3.3
+  languageName: unknown
+  linkType: soft
 
 "yjs-widgets@npm:^0.3.3":
   version: 0.3.3
