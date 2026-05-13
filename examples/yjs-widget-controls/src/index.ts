@@ -46,12 +46,53 @@ class IntSlider {
   slider: HTMLInputElement;
 }
 
+class Textarea {
+  constructor(yModel: IJupyterYModel, node: HTMLElement) {
+    this.yModel = yModel;
+    this.node = node;
+
+    this.textarea = document.createElement('textarea');
+
+    this.yModel.sharedModel.attrsChanged.connect(this._stateChanged.bind(this));
+
+    this.textarea.value = this.yModel.sharedModel.getAttr('value');
+    this.textarea.rows = this.yModel.sharedModel.getAttr('rows');
+    this.textarea.disabled = this.yModel.sharedModel.getAttr('disabled');
+
+    this.textarea.onchange = this._textareaChanged.bind(this);
+    this.textarea.oninput = this._textareaInput.bind(this);
+
+    node.appendChild(this.textarea);
+  }
+
+  _stateChanged(_: IJupyterYDoc, change: MapChange): void {
+    for (const key of change.keys()) {
+      this.textarea[key] = this.yModel.sharedModel.getAttr(key);
+    }
+  }
+
+  _textareaChanged(): void {
+    this.yModel.sharedModel.setAttr('value', this.textarea.value ?? '');
+  }
+
+  _textareaInput(): void {
+    if (this.yModel.sharedModel.getAttr('continuous_update')) {
+      this.yModel.sharedModel.setAttr('value', this.textarea.value ?? '');
+    }
+  }
+
+  yModel: IJupyterYModel;
+  node: HTMLElement;
+  textarea: HTMLTextAreaElement;
+}
+
 const simple: JupyterFrontEndPlugin<void> = {
   id: 'example:simple',
   autoStart: true,
   requires: [IJupyterYWidgetManager],
   activate: (_: JupyterFrontEnd, wm: IJupyterYWidgetManager): void => {
     wm.registerWidget('IntSlider', JupyterYModel, IntSlider);
+    wm.registerWidget('Textarea', JupyterYModel, Textarea);
   }
 };
 
