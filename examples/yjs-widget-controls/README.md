@@ -7,7 +7,7 @@
 
 ## Installation
 
-You can install simple-yjs-widget using pip:
+You can install yjs-widget-controls using pip:
 
 ```bash
 pip install .

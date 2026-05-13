@@ -1,5 +1,5 @@
 {
-  "name": "simple-yjs-widget",
+  "name": "yjs-widget-controls",
   "version": "0.1.0",
   "description": "A JupyterLab extension using yjs-widgets.",
   "keywords": [
@@ -8,7 +8,7 @@
     "jupyterlab-extension",
     "yjs"
   ],
-  "homepage": "https://github.com/QuantStack/yjs-widgets/examples/simple-yjs-widget",
+  "homepage": "https://github.com/QuantStack/yjs-widgets/examples/yjs-widget-controls",
   "bugs": {
     "url": "https://github.com/QuantStack/yjs-widgets/issues"
   },
@@ -34,7 +34,7 @@
     "build:lib": "tsc",
     "clean": "jlpm run clean:lib",
     "clean:lib": "rimraf lib tsconfig.tsbuildinfo",
-    "clean:labextension": "rimraf simple-yjs-widget/labextension simple-yjs-widget/_version.py",
+    "clean:labextension": "rimraf yjs-widget-controls/labextension yjs-widget-controls/_version.py",
     "clean:all": "jlpm run clean:lib && jlpm run clean:labextension",
     "eslint": "eslint . --ext .ts,.tsx --fix",
     "eslint:check": "eslint . --ext .ts,.tsx",
@@ -80,7 +80,7 @@
   },
   "jupyterlab": {
     "extension": true,
-    "outputDir": "simple_yjs_widget/labextension",
+    "outputDir": "yjs_widget_controls/labextension",
     "webpackConfig": "./extension.webpack.config.js",
     "sharedPackages": {
       "yjs-widgets": {

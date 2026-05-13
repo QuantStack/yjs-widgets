@@ -8,7 +8,7 @@ requires = [
 
 
 [project]
-name = "simple_yjs_widget"
+name = "yjs_widget_controls"
 readme = "README.md"
 license = { file = "LICENSE" }
 requires-python = ">=3.7"
@@ -42,24 +42,24 @@ source = "nodejs"
 fields = ["description", "authors", "urls"]
 
 [tool.hatch.build.target.sdist]
-artifacts = ["simple_yjs_widget/labextension"]
+artifacts = ["yjs_widget_controls/labextension"]
 exclude = [".github", "binder"]
 
 [tool.hatch.build.targets.wheel.shared-data]
-"install.json" = "share/jupyter/labextensions/simple-yjs-widget/install.json"
-"simple_yjs_widget/labextension" = "share/jupyter/labextensions/simple-yjs-widget"
+"install.json" = "share/jupyter/labextensions/yjs-widget-controls/install.json"
+"yjs_widget_controls/labextension" = "share/jupyter/labextensions/yjs-widget-controls"
 
 [tool.hatch.build.hooks.version]
-path = "simple_yjs_widget/_version.py"
+path = "yjs_widget_controls/_version.py"
 
 [tool.hatch.build.hooks.jupyter-builder]
 dependencies = ["hatch-jupyter-builder>=0.5"]
 build-function = "hatch_jupyter_builder.npm_builder"
 ensured-targets = [
-    "simple_yjs_widget/labextension/static/style.js",
-    "simple_yjs_widget/labextension/package.json",
+    "yjs_widget_controls/labextension/static/style.js",
+    "yjs_widget_controls/labextension/package.json",
 ]
-skip-if-exists = ["simple_yjs_widget/labextension/static/style.js"]
+skip-if-exists = ["yjs_widget_controls/labextension/static/style.js"]
 
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 build_cmd = "build:prod"
@@ -69,7 +69,7 @@ npm = ["jlpm"]
 build_cmd = "install:extension"
 npm = ["jlpm"]
 source_dir = "src"
-build_dir = "simple_yjs_widget/labextension"
+build_dir = "yjs_widget_controls/labextension"
 
 [tool.jupyter-releaser.options]
 version-cmd = "hatch version"

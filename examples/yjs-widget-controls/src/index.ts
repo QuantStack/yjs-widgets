@@ -11,7 +11,7 @@ import {
 } from '@jupyterlab/application';
 import { MapChange } from '@jupyter/ydoc';
 
-class MySlider {
+class IntSlider {
   constructor(yModel: IJupyterYModel, node: HTMLElement) {
     this.yModel = yModel;
     this.node = node;
@@ -51,7 +51,7 @@ const simple: JupyterFrontEndPlugin<void> = {
   autoStart: true,
   requires: [IJupyterYWidgetManager],
   activate: (_: JupyterFrontEnd, wm: IJupyterYWidgetManager): void => {
-    wm.registerWidget('MySlider', JupyterYModel, MySlider);
+    wm.registerWidget('IntSlider', JupyterYModel, IntSlider);
   }
 };
 
