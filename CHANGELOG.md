@@ -2,6 +2,25 @@
 
 <!-- <START NEW CHANGELOG ENTRY> -->
 
+## 0.5.2
+
+([Full Changelog](https://github.com/QuantStack/yjs-widgets/compare/v0.5.1...3ef5b3e8c1baab5afe853f80df35ac90a48d3087))
+
+### Maintenance and upkeep improvements
+
+- Update jupyter/ydoc [#29](https://github.com/QuantStack/yjs-widgets/pull/29) ([@martinRenou](https://github.com/martinRenou), [@davidbrochart](https://github.com/davidbrochart))
+
+### Contributors to this release
+
+The following people contributed discussions, new ideas, code and documentation contributions, and review.
+See [our definition of contributors](https://github-activity.readthedocs.io/en/latest/use/#how-does-this-tool-define-contributions-in-the-reports).
+
+([GitHub contributors page for this release](https://github.com/QuantStack/yjs-widgets/graphs/contributors?from=2026-05-13&to=2026-06-19&type=c))
+
+@davidbrochart ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3Adavidbrochart+updated%3A2026-05-13..2026-06-19&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3AmartinRenou+updated%3A2026-05-13..2026-06-19&type=Issues))
+
+<!-- <END NEW CHANGELOG ENTRY> -->
+
 ## 0.5.1
 
 ([Full Changelog](https://github.com/QuantStack/yjs-widgets/compare/v0.5.0...efdf9280968f3ef3e283b244ee30a2ea55e94626))
@@ -24,8 +43,6 @@ See [our definition of contributors](https://github-activity.readthedocs.io/en/l
 ([GitHub contributors page for this release](https://github.com/QuantStack/yjs-widgets/graphs/contributors?from=2026-04-07&to=2026-05-13&type=c))
 
 @AntoinePrv ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3AAntoinePrv+updated%3A2026-04-07..2026-05-13&type=Issues)) | @davidbrochart ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3Adavidbrochart+updated%3A2026-04-07..2026-05-13&type=Issues)) | @martinRenou ([activity](https://github.com/search?q=repo%3AQuantStack%2Fyjs-widgets+involves%3AmartinRenou+updated%3A2026-04-07..2026-05-13&type=Issues))
-
-<!-- <END NEW CHANGELOG ENTRY> -->
 
 ## 0.5.0
 
