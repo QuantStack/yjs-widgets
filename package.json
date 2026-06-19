@@ -49,12 +49,12 @@
         "watch:labextension": "jupyter labextension watch ."
     },
     "dependencies": {
-        "@jupyter/ydoc": "^2.0.0 || ^3.0.0-a3",
-        "@jupyterlab/application": "^4.0.0",
-        "@jupyterlab/apputils": "^4.0.0",
-        "@jupyterlab/console": "^4.2.4",
-        "@jupyterlab/coreutils": "^6.0.0",
-        "@jupyterlab/notebook": "^4.0.0",
+        "@jupyter/ydoc": "^2.0.0 || ^3.0.0 || ^4.0.0",
+        "@jupyterlab/application": "^4.6",
+        "@jupyterlab/apputils": "^4.6",
+        "@jupyterlab/console": "^4.6",
+        "@jupyterlab/coreutils": "^6.6",
+        "@jupyterlab/notebook": "^4.6",
         "@jupyterlab/services": "^7.0.0",
         "@lumino/coreutils": "^2.1.1",
         "@lumino/signaling": "^2.1.1",
